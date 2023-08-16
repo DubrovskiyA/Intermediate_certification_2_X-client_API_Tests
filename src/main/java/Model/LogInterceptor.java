@@ -1,4 +1,4 @@
-package Ext;
+package Model;
 
 import okhttp3.Interceptor;
 import okhttp3.MediaType;

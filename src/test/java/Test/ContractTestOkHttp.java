@@ -1,10 +1,10 @@
 package Test;
 
-import Ext.LogInterceptor;
-import Model.Contract.Company;
+import Model.LogInterceptor;
+import Model.Company;
 import Model.Contract.CreateEmployeeWithOnlyReqFields;
 import Model.Employee;
-import Model.Contract.UserInfo;
+import Model.UserInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -358,7 +358,6 @@ public class ContractTestOkHttp {
         return userInfo.getUserToken();
     }
     private int createCompany(String userToken) throws IOException {
-
         HttpUrl urlPostComp=HttpUrl.parse(BASE_URL).newBuilder().addPathSegments(PATH_COMPANY).build();
         RequestBody bodyPostComp=RequestBody
                 .create("{\"name\":\"TestCompany\",\"description\":\"Company created for test\"}",APPLICATION_JSON);

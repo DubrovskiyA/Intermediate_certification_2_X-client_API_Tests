@@ -1,4 +1,4 @@
-package Model.Contract;
+package Model;
 
 public class UserInfo {
     private String login;
