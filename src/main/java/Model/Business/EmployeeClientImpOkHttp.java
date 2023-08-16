@@ -1,6 +1,6 @@
 package Model.Business;
 
-import Model.Contract.Employee;
+import Model.Employee;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.HttpUrl;
@@ -11,20 +11,19 @@ import okhttp3.Response;
 import java.io.IOException;
 import java.util.List;
 
-public class EmployeeServiceImpOkHttp implements EmployeeService{
+public class EmployeeClientImpOkHttp implements EmployeeClient {
     OkHttpClient client;
-    String BASE_URL="https://x-clients-be.onrender.com";
-    String PATH="employee";
+    String BASE_URL="https://x-clients-be.onrender.com/employee";
     ObjectMapper mapper;
 
-    public EmployeeServiceImpOkHttp() {
-        client.newBuilder().build();
+    public EmployeeClientImpOkHttp(String url) {
+        BASE_URL=url;
+        client=new OkHttpClient.Builder().build();
         mapper=new ObjectMapper();
     }
-
     @Override
     public List<Employee> getList(int id) throws IOException {
-        HttpUrl url=HttpUrl.parse(BASE_URL).newBuilder().addPathSegments(PATH).addQueryParameter("company",Integer.toString(id)).build();
+        HttpUrl url=HttpUrl.parse(BASE_URL).newBuilder().addQueryParameter("company",Integer.toString(id)).build();
         Request request=new Request.Builder().get().url(url).build();
         Response response=client.newCall(request).execute();
         List<Employee> list=mapper.readValue(response.body().string(), new TypeReference<List<Employee>>() {});
@@ -38,13 +37,18 @@ public class EmployeeServiceImpOkHttp implements EmployeeService{
     }
 
     @Override
-    public Employee getEmployeeById(int id) {
-
-        return null;
+    public Employee getEmployeeById(int id) throws IOException {
+        HttpUrl url=HttpUrl.parse(BASE_URL).newBuilder().addPathSegment(Integer.toString(id)).build();
+        Request request=new Request.Builder().get().url(url).build();
+        Response response=client.newCall(request).execute();
+        Employee employee=mapper.readValue(response.body().string(),Employee.class);
+        return employee;
     }
 
     @Override
     public Employee editEmployee(int id) {
+
+
         return null;
     }
 }

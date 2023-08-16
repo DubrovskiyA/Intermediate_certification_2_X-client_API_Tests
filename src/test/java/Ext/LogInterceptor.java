@@ -1,12 +1,16 @@
 package Ext;
 
 import okhttp3.Interceptor;
+import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.Response;
+import okio.Buffer;
+import okio.BufferedSource;
+import okio.GzipSource;
+import okio.Okio;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.nio.Buffer;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -34,8 +38,13 @@ public class LogInterceptor implements Interceptor {
             }
         }
         if (request.body() != null) {
-            System.out.println(request.body());
+            Buffer buffer=new Buffer();
+            request.body().writeTo(buffer);
+            String body=buffer.readUtf8();
+            System.out.println("BODY:");
+            System.out.println(body);
         }
+        System.out.println();
     }
     private void processResponse(Response response) throws IOException {
         System.out.println("===== RESPONSE =====");
@@ -46,15 +55,15 @@ public class LogInterceptor implements Interceptor {
                 System.out.println(key + " : " + value);
             }
         }
-
-        // TODO: log body properly
-        long length = Long.parseLong(Objects.requireNonNull(response.header("Content-Length")));
+        long length = Long.parseLong(Objects.requireNonNull(response.header("content-length")));
         if (length > 0) {
             System.out.println("BODY:");
-            String s = response.peekBody(length).string();
-            System.out.println(s);
+            BufferedSource buffer = Okio.buffer(new GzipSource(response.peekBody(length).source()));
+            String content = buffer.readUtf8();
+            System.out.println(content);
         } else {
             System.out.println("NO BODY");
         }
+        System.out.println();
     }
 }

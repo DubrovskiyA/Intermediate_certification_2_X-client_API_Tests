@@ -1,14 +1,14 @@
 package Model.Business;
 
-import Model.Contract.Employee;
+import Model.Employee;
 
 import java.io.IOException;
 import java.util.List;
 
-public interface EmployeeService {
+public interface EmployeeClient {
     List<Employee> getList(int id) throws IOException;
 
     int createEmployee(Employee employee);
-    Employee getEmployeeById(int id);
+    Employee getEmployeeById(int id) throws IOException;
     Employee editEmployee(int id);
 }

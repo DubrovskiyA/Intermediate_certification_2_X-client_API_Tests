@@ -1,8 +1,8 @@
-package Model.Contract;
+package Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.time.LocalDate;
 import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -16,7 +16,7 @@ public class Employee {
     private String url;
     private String phone;
     private String birthdate;
-    private boolean isActive;
+    @JsonProperty("isActive") private boolean isActive;
 
     public Employee() {
     }
@@ -122,23 +122,23 @@ public class Employee {
         this.birthdate = birthdate;
     }
 
-    public boolean isActive() {
+    public boolean getIsActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Employee employee)) return false;
-        return getId() == employee.getId() && getCompanyId() == employee.getCompanyId() && isActive() == employee.isActive() && Objects.equals(getFirstName(), employee.getFirstName()) && Objects.equals(getLastName(), employee.getLastName()) && Objects.equals(getMiddleName(), employee.getMiddleName()) && Objects.equals(getEmail(), employee.getEmail()) && Objects.equals(getUrl(), employee.getUrl()) && Objects.equals(getPhone(), employee.getPhone()) && Objects.equals(getBirthdate(), employee.getBirthdate());
+        return getId() == employee.getId() && getCompanyId() == employee.getCompanyId() && isActive == employee.isActive && Objects.equals(getFirstName(), employee.getFirstName()) && Objects.equals(getLastName(), employee.getLastName()) && Objects.equals(getMiddleName(), employee.getMiddleName()) && Objects.equals(getEmail(), employee.getEmail()) && Objects.equals(getUrl(), employee.getUrl()) && Objects.equals(getPhone(), employee.getPhone()) && Objects.equals(getBirthdate(), employee.getBirthdate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFirstName(), getLastName(), getMiddleName(), getCompanyId(), getEmail(), getUrl(), getPhone(), getBirthdate(), isActive());
+        return Objects.hash(getId(), getFirstName(), getLastName(), getMiddleName(), getCompanyId(), getEmail(), getUrl(), getPhone(), getBirthdate(), isActive);
     }
 }
