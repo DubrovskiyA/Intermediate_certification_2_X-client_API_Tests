@@ -13,22 +13,15 @@ public class Employee {
     private String middleName;
     private int companyId;
     private String email;
+    @JsonProperty("avatar_url")
     private String url;
     private String phone;
     private String birthdate;
-    @JsonProperty("isActive") private boolean isActive;
+    @JsonProperty("isActive")
+    private boolean isActive;
 
     public Employee() {
     }
-
-    public Employee(int id, String firstName, String lastName, int companyId, boolean isActive) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.companyId = companyId;
-        this.isActive = isActive;
-    }
-
     public Employee(int id, String firstName, String lastName, String middleName, int companyId, String email, String url, String phone, String birthdate, boolean isActive) {
         this.id = id;
         this.firstName = firstName;
@@ -41,7 +34,6 @@ public class Employee {
         this.birthdate = birthdate;
         this.isActive = isActive;
     }
-
     public Employee(String lastName, String email, String url, String phone, boolean isActive) {
         this.lastName = lastName;
         this.email = email;
@@ -49,7 +41,6 @@ public class Employee {
         this.phone = phone;
         this.isActive = isActive;
     }
-
     public int getId() {
         return id;
     }
